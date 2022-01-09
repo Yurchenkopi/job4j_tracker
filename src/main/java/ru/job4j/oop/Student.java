@@ -5,15 +5,16 @@ public class Student {
         System.out.println("tra-ta-taa");
     }
 
-    public void song() {
-        System.out.println("I believe I can fly");
+    public void song(String song) {
+        System.out.println(song);
     }
 
     public static void main(String[] args) {
         Student petya = new Student();
+        String song = "I believe I can fly";
         for (int i = 0; i < 3; i++) {
             petya.music();
-            petya.song();
+            petya.song(song);
         }
     }
 }
