@@ -15,7 +15,7 @@ public class DummyDic {
 
     public static void main(String[] args) {
         DummyDic dictionary = new DummyDic();
-        String[] data = { "Dog", "Cat", "Frog" };
+        String[] data = {"Dog", "Cat", "Frog"};
         for (String eng : data) {
             System.out.println(dictionary.engToRus(eng) + ": " + eng);
         }
