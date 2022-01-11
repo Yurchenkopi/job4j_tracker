@@ -7,21 +7,20 @@ public class Calculator {
         return x + y;
     }
 
+    public static int minus(int a) {
+        return a - x;
+    }
+
     public int multiply(int a) {
         return x * a;
     }
 
-    public static int minus(int a) {
-        return x - a;
+    public int divide(int a) {
+        return a / x;
     }
 
-    public double divide(int a) {
-        return (double) a / x;
-    }
-
-    public double sumAllOperation(int a) {
-        Calculator calculator = new Calculator();
-        return sum(a) + calculator.multiply(a) + minus(a) + calculator.divide(a);
+    public int sumAllOperation(int a) {
+        return sum(a) + this.multiply(a) + minus(a) + this.divide(a);
     }
 
     public static void main(String[] args) {
