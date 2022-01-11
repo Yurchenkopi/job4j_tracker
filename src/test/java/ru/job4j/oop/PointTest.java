@@ -24,7 +24,7 @@ public class PointTest {
     }
 
     @Test
-    public void when04to20thenSQRT20() {
+    public void when04to20then4dot47() {
         double expected = 4.47;
         Point a = new Point(0, 4);
         Point b = new Point(2, 0);
