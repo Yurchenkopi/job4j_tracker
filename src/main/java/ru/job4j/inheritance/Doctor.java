@@ -1,6 +1,4 @@
-package ru.job4j.tracker.inheritance;
-
-import javax.print.Doc;
+package ru.job4j.inheritance;
 
 public class Doctor extends Profession {
 
