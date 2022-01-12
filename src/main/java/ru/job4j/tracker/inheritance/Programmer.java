@@ -1,6 +1,6 @@
 package ru.job4j.tracker.inheritance;
 
-public class Programmer extends Engineer{
+public class Programmer extends Engineer {
     private String[] progrLang;
 
     public Programmer(String[] progrLang) {

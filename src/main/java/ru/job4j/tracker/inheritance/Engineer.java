@@ -3,11 +3,11 @@ package ru.job4j.tracker.inheritance;
 public class Engineer {
     private int experience;
 
-    public Engineer () {
+    public Engineer() {
 
     }
 
-    public Engineer (int experience) {
+    public Engineer(int experience) {
         super();
         this.experience = experience;
     }

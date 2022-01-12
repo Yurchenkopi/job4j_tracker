@@ -8,7 +8,7 @@ public class Doctor extends Profession {
     private int priceOfVisit;
     private int timeOfVisit;
 
-    public Doctor () {
+    public Doctor() {
 
     }
 
