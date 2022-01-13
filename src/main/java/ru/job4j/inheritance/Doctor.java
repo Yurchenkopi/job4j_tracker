@@ -6,12 +6,8 @@ public class Doctor extends Profession {
     private int priceOfVisit;
     private int timeOfVisit;
 
-    public Doctor() {
-
-    }
-
-    public Doctor(int experience, int priceOfVisit, int timeOfVisit) {
-        super();
+    public Doctor(String name, String surname, String education, String birthday, int experience, int priceOfVisit, int timeOfVisit) {
+        super(name, surname, education, birthday);
         this.experience = experience;
         this.priceOfVisit = priceOfVisit;
         this.timeOfVisit = timeOfVisit;
