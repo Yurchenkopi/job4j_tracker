@@ -1,14 +1,14 @@
 package ru.job4j.pojo;
 
 public class Library {
-    public void printInfo(Book[] book){
+    public void printInfo(Book[] book) {
         for (int i = 0; i < book.length; i++) {
             System.out.println(i + " | " + "Текущая книга: " + book[i].getTitle() + ", количество страниц: " + book[i].getPageNum());
         }
         System.out.println("--------------------------------------------------------------------------------");
     }
 
-    public void findInfo(Book[] book, String str){
+    public void findInfo(Book[] book, String str) {
         for (int i = 0; i < book.length; i++) {
             if (book[i].getTitle().equals(str)) {
                 System.out.println(i + " | " + "Книга найдена: " + book[i].getTitle() + ", количество страниц: " + book[i].getPageNum());
