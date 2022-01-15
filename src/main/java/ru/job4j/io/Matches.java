@@ -11,14 +11,27 @@ public class Matches {
         while (count > 0) {
             String player = turn ? "Первый игрок" : "Второй игрок";
             System.out.println(player + " введите число от 1 до 3:");
+            while (!input.hasNextInt()) {
+                System.out.println("Введенный символ не является числом");
+                input.nextLine();
+                System.out.println(player + " введите число от 1 до 3:");
+            }
             int matches = Integer.parseInt(input.nextLine());
-            turn = !turn;
-            count = count - matches;
-            System.out.println("Осталось " + count + " спичек");
-            if ((!turn) && (count == 0)) {
-                System.out.println("Выиграл первый игрок");
-            } else if (count == 0) {
-                System.out.println("Выиграл второй игрок");
+            if ((matches <= 3) && (matches >= 1)) {
+                turn = !turn;
+                count = count - matches;
+                if (count > 0) {
+                    System.out.println("Осталось спичек: " + count + " шт.");
+                }
+                if (count == 0) {
+                    if (!turn) {
+                        System.out.println("Выиграл первый игрок");
+                    } else {
+                        System.out.println("Выиграл второй игрок");
+                    }
+                }
+            } else {
+                System.out.println("Можно убрать не больше 3 спичек, повторите попытку");
             }
         }
     }
