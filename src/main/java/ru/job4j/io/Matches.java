@@ -14,12 +14,11 @@ public class Matches {
             int matches = Integer.parseInt(input.nextLine());
             turn = !turn;
             count = count - matches;
-            if (count == 0) {
-                if (!turn) {
-                    System.out.println("Выиграл первый игрок");
-                } else {
-                    System.out.println("Выиграл второй игрок");
-                }
+            System.out.println("Осталось " + count + " спичек");
+            if ((!turn) && (count == 0)) {
+                System.out.println("Выиграл первый игрок");
+            } else if (count == 0) {
+                System.out.println("Выиграл второй игрок");
             }
         }
     }
