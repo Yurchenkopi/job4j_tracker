@@ -1,7 +1,7 @@
 package ru.job4j.tracker;
 
 public class StartUI {
-    public static void createItem(ConsoleInput input, Tracker tracker) {
+    public static void createItem(Input input, Tracker tracker) {
         System.out.println("=== Create a new Item ===");
         String name = input.askStr("Enter name: ");
         Item item = new Item(name);
@@ -21,7 +21,7 @@ public class StartUI {
         }
     }
 
-    public static void editItem(ConsoleInput input, Tracker tracker) {
+    public static void editItem(Input input, Tracker tracker) {
         System.out.println("=== Edit item ===");
         int id = Integer.parseInt(input.askStr("Enter id: "));
         String name = input.askStr("Enter name: ");
@@ -33,7 +33,7 @@ public class StartUI {
         }
     }
 
-    public static void deleteItem(ConsoleInput input, Tracker tracker) {
+    public static void deleteItem(Input input, Tracker tracker) {
         System.out.println("=== Delete item ===");
         int id = Integer.parseInt(input.askStr("Enter id: "));
         if (tracker.delete(id)) {
@@ -43,7 +43,7 @@ public class StartUI {
         }
     }
 
-    public static void findItemById(ConsoleInput input, Tracker tracker) {
+    public static void findItemById(Input input, Tracker tracker) {
         System.out.println("=== Find item by id ===");
         int id = Integer.parseInt(input.askStr("Enter id: "));
         Item item = tracker.findById(id);
@@ -54,7 +54,7 @@ public class StartUI {
         }
     }
 
-    public static void findItemByName(ConsoleInput input, Tracker tracker) {
+    public static void findItemByName(Input input, Tracker tracker) {
         System.out.println("=== Find items by name ===");
         String name = input.askStr("Enter name: ");
         Item[] items = tracker.findByName(name);
@@ -67,7 +67,7 @@ public class StartUI {
         }
     }
 
-    public void init(ConsoleInput input, Tracker tracker) {
+    public void init(Input input, Tracker tracker) {
         boolean run = true;
         while (run) {
             showMenu();
@@ -103,7 +103,7 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        ConsoleInput input = new ConsoleInput();
+        Input input = new ConsoleInput();
         Tracker tracker = new Tracker();
         new StartUI().init(input, tracker);
     }
