@@ -23,16 +23,15 @@ public class Matches {
                 if (count > 0) {
                     System.out.println("Осталось спичек: " + count + " шт.");
                 }
-                if (count == 0) {
-                    if (!turn) {
-                        System.out.println("Выиграл первый игрок");
-                    } else {
-                        System.out.println("Выиграл второй игрок");
-                    }
-                }
+
             } else {
                 System.out.println("Можно убрать не больше 3 спичек, повторите попытку");
             }
+        }
+        if (!turn) {
+            System.out.println("Выиграл первый игрок");
+        } else {
+            System.out.println("Выиграл второй игрок");
         }
     }
 }
