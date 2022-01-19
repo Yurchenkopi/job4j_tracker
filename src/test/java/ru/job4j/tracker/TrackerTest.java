@@ -84,9 +84,12 @@ public class TrackerTest {
         String[] answers = {"Fix PC", "Hello", "Idea", "Job4j", "Test", "Java"};
         Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
-        for (int i = 0; i < answers.length; i++) {
-            StartUI.createItem(input, tracker);
-        }
+        StartUI.createItem(input, tracker);
+        StartUI.createItem(input, tracker);
+        StartUI.createItem(input, tracker);
+        StartUI.createItem(input, tracker);
+        StartUI.createItem(input, tracker);
+        StartUI.createItem(input, tracker);
         Item[] created = tracker.findAll();
         Item[] expected = new Item[6];
         expected[0] = new Item("Fix PC");
@@ -95,9 +98,12 @@ public class TrackerTest {
         expected[3] = new Item("Job4j");
         expected[4] = new Item("Test");
         expected[5] = new Item("Java");
-        for (int i = 0; i < created.length; i++) {
-            assertThat(created[i].getName(), is(expected[i].getName()));
-        }
+        assertThat(created[0].getName(), is(expected[0].getName()));
+        assertThat(created[1].getName(), is(expected[1].getName()));
+        assertThat(created[2].getName(), is(expected[2].getName()));
+        assertThat(created[3].getName(), is(expected[3].getName()));
+        assertThat(created[4].getName(), is(expected[4].getName()));
+        assertThat(created[5].getName(), is(expected[5].getName()));
     }
 }
 
