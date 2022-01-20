@@ -3,6 +3,7 @@ package ru.job4j.tracker;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.IsNull.nullValue;
 
@@ -112,7 +113,7 @@ public class TrackerTest {
         Item item = new Item("new item");
         tracker.add(item);
         String[] answers = {
-                String.valueOf(item.getId()), /* id сохраненной заявки в объект tracker. */
+                String.valueOf(item.getId()),
                 "edited item"
         };
         StartUI.editItem(new StubInput(answers), tracker);
@@ -125,10 +126,10 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item item = new Item("new item");
         tracker.add(item);
-        String[] answers = {"1"};
+        String[] answers = {String.valueOf(item.getId())};
         int id = item.getId();
         StartUI.deleteItem(new StubInput(answers), tracker);
-        assertThat(tracker.findById(id), is(nullValue()));
+        assertNull(tracker.findById(id));
     }
 }
 
