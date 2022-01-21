@@ -96,7 +96,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenReplaceItem() {
+    public void whenReplaceItem()  {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Replaced item"));
         String replacedName = "New item name";
@@ -113,7 +113,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenDeleteItem() {
+    public void whenDeleteItem()  {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Deleted item"));
         Output out = new ConsoleOutput();
