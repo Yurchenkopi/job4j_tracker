@@ -181,9 +181,8 @@ public class TrackerTest {
     public void whenFindAllActionTestOutputAndHaveItemsIsSuccessfully() {
         Output out = new StubOutput();
         Tracker tracker = new Tracker();
-        tracker.add(new Item("test1"));
-        tracker.add(new Item("test2"));
-        String createdTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss"));
+        Item item1 = tracker.add(new Item("test1"));
+        Item item2 = tracker.add(new Item("test2"));
         Input in = new StubInput(
                 new String[] {"0", "1"}
         );
@@ -198,8 +197,8 @@ public class TrackerTest {
                         + "0. Show all items" + ln
                         + "1. Exit Program" + ln
                         + "=== Show all items ===" + ln
-                        + "Item{id=1, name='test1', created=" + createdTime + "}" + ln
-                        + "Item{id=2, name='test2', created=" + createdTime + "}" + ln
+                        + item1 + ln
+                        + item2 + ln
                         + "Menu:" + ln
                         + "0. Show all items" + ln
                         + "1. Exit Program" + ln
@@ -212,8 +211,7 @@ public class TrackerTest {
         Output out = new StubOutput();
         Tracker tracker = new Tracker();
         tracker.add(new Item("test1"));
-        tracker.add(new Item("Needed Item"));
-        String createdTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss"));
+        Item item2 = tracker.add(new Item("Needed Item"));
         Input in = new StubInput(
                 new String[] {"0", "Needed Item", "1"}
         );
@@ -228,7 +226,7 @@ public class TrackerTest {
                         + "0. Find item by name" + ln
                         + "1. Exit Program" + ln
                         + "=== Find items by name ===" + ln
-                        + "Item{id=2, name='Needed Item', created=" + createdTime + "}" + ln
+                        + item2 + ln
                         + "Menu:" + ln
                         + "0. Find item by name" + ln
                         + "1. Exit Program" + ln
@@ -243,7 +241,6 @@ public class TrackerTest {
         Item[] arrItem = {tracker.add(new Item("test1")),
                           tracker.add(new Item("Needed Item"))
                          };
-        String createdTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss"));
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(arrItem[1].getId()), "1"}
         );
@@ -258,7 +255,7 @@ public class TrackerTest {
                         + "0. Find item by id" + ln
                         + "1. Exit Program" + ln
                         + "=== Find item by id ===" + ln
-                        + "Item{id=2, name='Needed Item', created=" + createdTime + "}" + ln
+                        + arrItem[1] + ln
                         + "Menu:" + ln
                         + "0. Find item by id" + ln
                         + "1. Exit Program" + ln
