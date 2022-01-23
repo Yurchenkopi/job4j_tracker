@@ -2,6 +2,9 @@ package ru.job4j.tracker;
 
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -89,7 +92,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         UserAction[] actions = {
                 new CreateAction(out),
-                new ExitAction()
+                new ExitAction(out)
         };
         new StartUI(out).init(in, tracker, actions);
         assertThat(tracker.findAll()[0].getName(), is("Item name"));
@@ -106,7 +109,7 @@ public class TrackerTest {
         );
         UserAction[] actions = {
                 new EditAction(out),
-                new ExitAction()
+                new ExitAction(out)
         };
         new StartUI(out).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()).getName(), is(replacedName));
@@ -122,7 +125,7 @@ public class TrackerTest {
         );
         UserAction[] actions = {
                 new DeleteAction(out),
-                new ExitAction()
+                new ExitAction(out)
         };
         new StartUI(out).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()), is(nullValue()));
@@ -136,14 +139,209 @@ public class TrackerTest {
         );
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new ExitAction()
+                new ExitAction(out)
         };
         new StartUI(out).init(in, tracker, actions);
         assertThat(out.toString(), is(
-                "Menu." + System.lineSeparator()
+                "Menu:" + System.lineSeparator()
                         + "0. Exit Program" + System.lineSeparator()
+                        + "=== Exit Program ===" + System.lineSeparator()
         ));
     }
 
+    @Test
+    public void whenReplaceItemTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        String replaceName = "New Test Name";
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(one.getId()), replaceName, "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new EditAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Edit item" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Edit item ===" + ln
+                        + "Заявка изменена успешно." + ln
+                        + "Menu:" + ln
+                        + "0. Edit item" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit Program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindAllActionTestOutputAndHaveItemsIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("test1"));
+        tracker.add(new Item("test2"));
+        String createdTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss"));
+        Input in = new StubInput(
+                new String[] {"0", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ShowAllAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Show all items ===" + ln
+                        + "Item{id=1, name='test1', created=" + createdTime + "}" + ln
+                        + "Item{id=2, name='test2', created=" + createdTime + "}" + ln
+                        + "Menu:" + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit Program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindByNameActionTestOutputAndHaveItemsIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("test1"));
+        tracker.add(new Item("Needed Item"));
+        String createdTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss"));
+        Input in = new StubInput(
+                new String[] {"0", "Needed Item", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new FindItemByNameAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Find item by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find items by name ===" + ln
+                        + "Item{id=2, name='Needed Item', created=" + createdTime + "}" + ln
+                        + "Menu:" + ln
+                        + "0. Find item by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit Program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindByIdActionTestOutputAndHaveItemsIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item[] arrItem = {tracker.add(new Item("test1")),
+                          tracker.add(new Item("Needed Item"))
+                         };
+        String createdTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss"));
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(arrItem[1].getId()), "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new FindItemByIdAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find item by id ===" + ln
+                        + "Item{id=2, name='Needed Item', created=" + createdTime + "}" + ln
+                        + "Menu:" + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit Program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindAllActionTestOutputAndNoItemsIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Input in = new StubInput(
+                new String[] {"0", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ShowAllAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Show all items ===" + ln
+                        + "Хранилище еще не содержит заявок" + ln
+                        + "Menu:" + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit Program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindByNameActionTestOutputAndNoItemsIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Input in = new StubInput(
+                new String[] {"0", "Needed Item", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new FindItemByNameAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Find item by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find items by name ===" + ln
+                        + "Заявки с именем: Needed Item не найдены." + ln
+                        + "Menu:" + ln
+                        + "0. Find item by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit Program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindByIdActionTestOutputAndNoItemsIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Input in = new StubInput(
+                new String[] {"0", "99", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new FindItemByIdAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find item by id ===" + ln
+                        + "Заявка с введенным id: 99 не найдена." + ln
+                        + "Menu:" + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit Program ===" + ln
+        ));
+    }
 }
 
