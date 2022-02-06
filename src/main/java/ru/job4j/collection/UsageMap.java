@@ -10,6 +10,8 @@ public class UsageMap {
         map.put("2222@ya.ru", "Ivan Petrov");
         map.put("3333@ya.ru", "Vasya Pupkin");
         map.put("4444@ya.ru", "Tihon Petrov");
+        map.put("2222@ya.ru", "Gleb Sidorov");
+        map.put("3333@ya.ru", "Alex Alexeev");
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
