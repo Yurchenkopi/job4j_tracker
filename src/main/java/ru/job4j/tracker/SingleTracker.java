@@ -28,6 +28,10 @@ public class SingleTracker {
         return tracker.findById(id);
     }
 
+    public List<Item> findByName(String key) {
+        return tracker.findByName(key);
+    }
+
     public boolean replace(int id, Item item) {
         return tracker.replace(id, item);
     }

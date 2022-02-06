@@ -21,29 +21,27 @@ public class Tracker  {
 
     private int indexOf(int id) {
         int rsl = -1;
-        int index = 0;
-        for (Item item : items) {
-            if (item.getId() == id) {
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index).getId() == id) {
                 rsl = index;
                 break;
             }
-            index++;
         }
         return rsl;
     }
 
     public List<Item> findAll() {
-        return items;
+        return List.copyOf(items);
     }
 
     public List<Item> findByName(String key) {
-        List<Item> itemTemp = new ArrayList<>();
+        List<Item> rsl = new ArrayList<>();
         for (Item item : items) {
             if (key.equals(item.getName())) {
-                itemTemp.add(item);
+                rsl.add(item);
             }
         }
-        return itemTemp;
+        return rsl;
     }
 
     public boolean replace(int id, Item item) {

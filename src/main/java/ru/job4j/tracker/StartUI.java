@@ -27,10 +27,8 @@ public class StartUI {
 
     private void showMenu(List<UserAction> actions) {
         out.println("Menu:");
-        int index = 0;
-        for (UserAction action : actions) {
-            out.println(index + ". " + action.name());
-            index++;
+        for (int index = 0; index < actions.size(); index++) {
+            out.println(index + ". " + actions.get(index).name());
         }
     }
 
@@ -38,7 +36,7 @@ public class StartUI {
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
         Tracker tracker = new Tracker();
-        List<UserAction> actions = new ArrayList<>(Arrays.asList(
+        List<UserAction> actions = Arrays.asList(
                 new CreateAction(output),
                 new ShowAllAction(output),
                 new EditAction(output),
@@ -46,7 +44,7 @@ public class StartUI {
                 new FindItemByIdAction(output),
                 new FindItemByNameAction(output),
                 new ExitAction(output)
-        ));
+        );
         new StartUI(output).init(input, tracker, actions);
     }
 }
