@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import static org.junit.Assert.assertNull;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -359,6 +360,36 @@ public class TrackerTest {
                                 + "=== Exit Program ===" + ln
                 )
         );
+    }
+
+    @Test
+    public void whenSortByName() {
+        Tracker tracker = new Tracker();
+        List<Item> items = Arrays.asList(new Item(2, "test2"),
+                                    new Item(4, "test4"),
+                                    new Item(3, "test3"),
+                                    new Item(1, "test1"));
+        List<Item> expected = Arrays.asList(new Item(1, "test1"),
+                                            new Item(2, "test2"),
+                                            new Item(3, "test3"),
+                                            new Item(4, "test4"));
+        Collections.sort(items, new ItemAscByName());
+        assertThat(items, is(expected));
+    }
+
+    @Test
+    public void whenSortByNameRev() {
+        Tracker tracker = new Tracker();
+        List<Item> items = Arrays.asList(new Item(2, "test2"),
+                new Item(4, "test4"),
+                new Item(3, "test3"),
+                new Item(1, "test1"));
+        List<Item> expected = Arrays.asList(new Item(4, "test4"),
+                new Item(3, "test3"),
+                new Item(2, "test2"),
+                new Item(1, "test1"));
+        Collections.sort(items, new ItemDescByName());
+        assertThat(items, is(expected));
     }
 }
 
