@@ -1,9 +1,17 @@
 package ru.job4j.collection;
 
+import java.util.Comparator;
+import java.util.Objects;
+
 public class Job implements Comparable<Job> {
     private String name;
 
     private int priority;
+
+    public static Comparator<Job> sortAscByNameAndAscByPriority = new JobAscByName().thenComparing(new JobAscByPriority());
+    public static Comparator<Job> sortAscByNameAndDescByPriority = new JobAscByName().thenComparing(new JobDescByPriority());
+    public static Comparator<Job> sortDescByNameAndAscByPriority = new JobDescByName().thenComparing(new JobAscByPriority());
+    public static Comparator<Job> sortDescByNameAndDescByPriority = new JobDescByName().thenComparing(new JobAscByPriority());
 
     public Job(String name, int priority) {
         this.name = name;
@@ -29,5 +37,22 @@ public class Job implements Comparable<Job> {
     @Override
     public int compareTo(Job another) {
         return Integer.compare(priority, another.priority);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Job job = (Job) o;
+        return priority == job.priority && Objects.equals(name, job.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, priority);
     }
 }
