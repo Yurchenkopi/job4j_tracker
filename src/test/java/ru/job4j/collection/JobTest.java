@@ -10,7 +10,8 @@ import static org.hamcrest.Matchers.*;
 public class JobTest {
     @Test
     public void whenCompatorByDescNameAndDescPrority() {
-        int rsl = Job.sortDescByNameAndDescByPriority.compare(
+        Comparator<Job> sortDescByNameAndDescByPriority = new JobDescByName().thenComparing(new JobAscByPriority());
+        int rsl = sortDescByNameAndDescByPriority.compare(
                 new Job("Impl task", 0),
                 new Job("Fix bug", 1)
         );
@@ -19,7 +20,8 @@ public class JobTest {
 
     @Test
     public void whenCompatorByAscNameAndAscPrority() {
-        int rsl = Job.sortAscByNameAndAscByPriority.compare(
+        Comparator<Job> sortAscByNameAndAscByPriority = new JobAscByName().thenComparing(new JobAscByPriority());
+        int rsl = sortAscByNameAndAscByPriority.compare(
                 new Job("Impl task", 0),
                 new Job("Fix bug", 1)
         );
@@ -28,6 +30,7 @@ public class JobTest {
 
     @Test
     public void whenCompatorByAscNameAndDescPrority() {
+        Comparator<Job> sortAscByNameAndDescByPriority = new JobAscByName().thenComparing(new JobDescByPriority());
         List<Job> tasks = Arrays.asList(
                 new Job("Impl task", 0),
                 new Job("Fix bug", 4),
@@ -41,12 +44,13 @@ public class JobTest {
                 new Job("Impl task", 0)
         );
         List<Job> rsl = new ArrayList<>();
-        Collections.sort(tasks, Job.sortAscByNameAndDescByPriority);
+        Collections.sort(tasks, sortAscByNameAndDescByPriority);
         assertThat(tasks, is(expected));
     }
 
     @Test
     public void whenCompatorByDescNameAndAscPrority() {
+        Comparator<Job> sortDescByNameAndAscByPriority = new JobDescByName().thenComparing(new JobAscByPriority());
         List<Job> tasks = Arrays.asList(
                 new Job("Fix bug", 4),
                 new Job("Fix bug", 3),
@@ -60,7 +64,7 @@ public class JobTest {
                 new Job("Fix bug", 4)
         );
         List<Job> rsl = new ArrayList<>();
-        Collections.sort(tasks, Job.sortDescByNameAndAscByPriority);
+        Collections.sort(tasks, sortDescByNameAndAscByPriority);
         assertThat(tasks, is(expected));
     }
 

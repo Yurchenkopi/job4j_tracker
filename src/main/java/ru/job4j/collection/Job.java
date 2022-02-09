@@ -8,11 +8,6 @@ public class Job implements Comparable<Job> {
 
     private int priority;
 
-    public static Comparator<Job> sortAscByNameAndAscByPriority = new JobAscByName().thenComparing(new JobAscByPriority());
-    public static Comparator<Job> sortAscByNameAndDescByPriority = new JobAscByName().thenComparing(new JobDescByPriority());
-    public static Comparator<Job> sortDescByNameAndAscByPriority = new JobDescByName().thenComparing(new JobAscByPriority());
-    public static Comparator<Job> sortDescByNameAndDescByPriority = new JobDescByName().thenComparing(new JobAscByPriority());
-
     public Job(String name, int priority) {
         this.name = name;
         this.priority = priority;
