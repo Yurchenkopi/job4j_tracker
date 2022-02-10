@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StringCompareTest {
     @Test
-    public void whenStringsAreEqualThenZero () {
+    public void whenStringsAreEqualThenZero() {
         StringCompare compare = new StringCompare();
         int rst = compare.compare(
                 "Ivanov",
@@ -26,16 +26,6 @@ public class StringCompareTest {
                 "Ivanova"
         );
         assertThat(rst, lessThan(0));
-    }
-
-    @Test
-    public void whenLeftGreaterThanRightAndDifferTheLastSymResultShouldBePositive() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Ivanova",
-                "Ivanov"
-        );
-        assertThat(rst, greaterThan(0));
     }
 
     @Test
@@ -66,5 +56,15 @@ public class StringCompareTest {
                 "Petrov"
         );
         assertThat(rst, lessThan(0));
+    }
+
+    @Test
+    public void whenLeftGreaterThanRightAndDifferTheLastSymResultShouldBePositive() {
+        StringCompare compare = new StringCompare();
+        int rst = compare.compare(
+                "Ivanova",
+                "Ivanov"
+        );
+        assertThat(rst, greaterThan(0));
     }
 }
