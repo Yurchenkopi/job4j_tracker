@@ -2,9 +2,19 @@ package ru.job4j.bank;
 
 import java.util.Objects;
 
+/**
+ * Класс определяет модель данных пользователя User.
+ */
+
 public class User {
     private String passport;
     private String username;
+
+    /**
+     * Конструктор инициализирует поля пользователя по умолчанию
+     * @param passport содержит номер паспорта пользователя
+     * @param username содержит имя пользователя
+     */
 
     public User(String passport, String username) {
         this.passport = passport;

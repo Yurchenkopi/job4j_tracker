@@ -2,9 +2,19 @@ package ru.job4j.bank;
 
 import java.util.Objects;
 
+/**
+ * Класс описывает модель данных аккаунт Account пользователя.
+ */
+
 public class Account {
     private String requisite;
     private double balance;
+
+    /**
+     * Конструктор инициализирует поля аккаунта по умолчанию
+     * @param requisite содержит номер счета
+     * @param balance содержит количество денежных средств на счете
+     */
 
     public Account(String requisite, double balance) {
         this.requisite = requisite;

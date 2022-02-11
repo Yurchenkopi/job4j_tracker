@@ -16,14 +16,14 @@ import java.util.Map;
 public class BankService {
     /**
      * Хранение данных пользователей по счетам с балансом осуществляется
-     * в ассоциативной карте.
+     * в ассоциативной карте
      */
     private final Map<User, List<Account>> users = new HashMap<>();
 
     /**
      * Метод позволяет добавить в справочник нового пользователя, если такого пользователя ранее
-     * не было в справочнике.
-     * @param user - пользователь, который должен быть добавлен в систему.
+     * не было в справочнике
+     * @param user - пользователь, который должен быть добавлен в систему
      */
 
     public void addUser(User user) {
@@ -32,8 +32,10 @@ public class BankService {
 
     /**
      * Метод позволяет присвоить пользователю новый аккаунт
-     * @param passport используется для пои
-     * @param account
+     * Если пользователь не найден по номеру паспорта или номер счета пользователя
+     * уже существует, то аккаунт не создастся
+     * @param passport используется для поиска пользователя User в справочнике
+     * @param account содержит информацию с номером счета и балансом средств
      */
 
     public void addAccount(String passport, Account account) {
@@ -42,6 +44,12 @@ public class BankService {
             users.get(user).add(account);
         }
     }
+
+    /**
+     * Метод позволяет найти пользователя типа User по номеру паспорта
+     * @param passport передаётся для поиска пользователя в справочнике
+     * @return возвращает найденного пользователя
+     */
 
     public User findByPassport(String passport) {
         User rsl = null;
@@ -53,6 +61,14 @@ public class BankService {
         }
         return rsl;
     }
+
+    /**
+     * Метод позволяет найти по номеру паспорта пользователя и
+     * номеру счета аккаунт пользователя
+     * @param passport передаваемый номер папорта
+     * @param requisite передаваемый номер счета
+     * @return возвращает аккаунт
+     */
 
     public Account findByRequisite(String passport, String requisite) {
         Account rsl = null;
@@ -67,6 +83,19 @@ public class BankService {
         }
         return rsl;
     }
+
+    /**
+     * Метод позволяет перевести денежные средства с одного счета на другой.
+     * Если аккаунт, которому принадлежит счет, с которого осуществляется перевод null или
+     * счет этого аккаунта null или баланс этого счета меньше переводимой суммы, перевод
+     * осуществлен не будет и метод завершится со значением false.
+     * @param srcPassport номер паспорта пользователя, со счета которго осуществляется перевод
+     * @param srcRequisite номер счета, с которого осуществляется перевод
+     * @param destPassport номер паспорта пользователя, являющегося получателем перевода
+     * @param destRequisite номер счета получателя
+     * @param amount количество переводимых денежных средств
+     * @return в случае, если перевод выполнен возвращает true, если перевод отклонен - false
+     */
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
