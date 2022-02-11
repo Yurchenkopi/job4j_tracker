@@ -5,12 +5,36 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Класс условно описывает работу простейшего банковского сервиса.
+ * Основным элементом класса является справочник, хранящий информацию
+ * по спискам счетов и их балансом для каждого пользователя.
+ * @author Pavel Yurchenko
+ * @version 1.0
+ */
+
 public class BankService {
+    /**
+     * Хранение данных пользователей по счетам с балансом осуществляется
+     * в ассоциативной карте.
+     */
     private final Map<User, List<Account>> users = new HashMap<>();
+
+    /**
+     * Метод позволяет добавить в справочник нового пользователя, если такого пользователя ранее
+     * не было в справочнике.
+     * @param user - пользователь, который должен быть добавлен в систему.
+     */
 
     public void addUser(User user) {
         users.putIfAbsent(user, new ArrayList<Account>());
     }
+
+    /**
+     * Метод позволяет присвоить пользователю новый аккаунт
+     * @param passport используется для пои
+     * @param account
+     */
 
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
