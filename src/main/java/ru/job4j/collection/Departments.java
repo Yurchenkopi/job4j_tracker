@@ -10,9 +10,8 @@ public class Departments {
             String start = "";
             String[] dataArr = value.split("/");
             for (String el : dataArr) {
-                el = start + el;
-                tmp.add(el);
-                start = el + "/";
+                start += "".equals(start) ? el : "/" + el;
+                tmp.add(start);
             }
         }
         return new ArrayList<>(tmp);
