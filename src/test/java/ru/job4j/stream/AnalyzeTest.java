@@ -74,20 +74,22 @@ public class AnalyzeTest {
         Tuple best = Analyze.bestStudent(
                 List.of(
                         new Pupil("Ivanov", List.of(new Subject("Math", 100), new Subject("Lang", 100))),
-                        new Pupil("Petrov", List.of(new Subject("Math", 60), new Subject("Lang", 60)))
+                        new Pupil("Petrov", List.of(new Subject("Math", 60), new Subject("Lang", 60))),
+                        new Pupil("Sidorov", List.of(new Subject("Math", 100), new Subject("Lang", 160)))
                 ).stream()
         );
-        assertThat(best, is(new Tuple("Ivanov", 200D)));
+        assertThat(best, is(new Tuple("Sidorov", 260D)));
     }
 
     @Test
     public void whenBestSubject() {
         Tuple best = Analyze.bestSubject(
                 List.of(
-                        new Pupil("Ivanov", List.of(new Subject("Math", 100), new Subject("Lang", 40))),
-                        new Pupil("Petrov", List.of(new Subject("Math", 60), new Subject("Lang", 60)))
+                        new Pupil("Ivanov", List.of(new Subject("Math", 20), new Subject("Lang", 40))),
+                        new Pupil("Petrov", List.of(new Subject("Math", 60), new Subject("Lang", 60))),
+                        new Pupil("Sidorov", List.of(new Subject("Math", 60), new Subject("Lang", 100)))
                 ).stream()
         );
-        assertThat(best, is(new Tuple("Math", 160D)));
+        assertThat(best, is(new Tuple("Lang", 200D)));
     }
 }
