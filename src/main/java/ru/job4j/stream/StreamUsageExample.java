@@ -2,7 +2,7 @@ package ru.job4j.stream;
 
 import java.util.stream.Stream;
 
-public class StreamUsageExample {
+public class StreamUsageExample  {
     public enum Suit {
         Diamonds, Hearts, Spades, Clubs
     }
