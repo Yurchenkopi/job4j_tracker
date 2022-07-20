@@ -2,11 +2,11 @@ package ru.job4j.stream;
 
 import java.util.Objects;
 
-public class Tuple {
+public class Label {
     private String name;
     private double score;
 
-    public Tuple(String name, double score) {
+    public Label(String name, double score) {
         this.name = name;
         this.score = score;
     }
@@ -23,9 +23,9 @@ public class Tuple {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Tuple tuple = (Tuple) o;
-        return Double.compare(tuple.score, score) == 0
-                && Objects.equals(name, tuple.name);
+        Label label = (Label) o;
+        return Double.compare(label.score, score) == 0
+                && Objects.equals(name, label.name);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Tuple {
 
     @Override
     public String toString() {
-        return "Tuple{"
+        return "Lable{"
                 + "name='" + name + '\''
                 + ", score=" + score
                 + '}';
