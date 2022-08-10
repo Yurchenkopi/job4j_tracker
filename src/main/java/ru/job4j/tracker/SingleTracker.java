@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SingleTracker {
     private static SingleTracker instance = null;
-    private final Tracker tracker = new Tracker();
+    private final SqlTracker tracker = new SqlTracker();
 
     private SingleTracker() {
     }
