@@ -21,28 +21,9 @@ public class SqlTracker implements Store, AutoCloseable {
                     config.getProperty("username"),
                     config.getProperty("password")
             );
-            createTable("items");
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
-    }
-
-    public void query(String str) {
-        try (var statement = cn.createStatement()) {
-            statement.execute(str);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createTable(String tableName) {
-        query(String.format(
-                "CREATE TABLE IF NOT EXISTS %s(%s, %s, %s);",
-                tableName,
-                "id SERIAL PRIMARY KEY",
-                "name text",
-                "created timestamp"
-        ));
     }
 
     @Override
@@ -52,12 +33,27 @@ public class SqlTracker implements Store, AutoCloseable {
         }
     }
 
+    private Item rslSetToItem(ResultSet rslSet) throws SQLException {
+        return new Item(
+                rslSet.getInt("id"),
+                rslSet.getString("name"),
+                rslSet.getTimestamp("created").toLocalDateTime()
+        );
+    }
+
     @Override
     public Item add(Item item) {
-        try (var ps = cn.prepareStatement("INSERT INTO items(name, created) VALUES (?, ?);")) {
+        try (var ps = cn.prepareStatement(
+                "INSERT INTO items(name, created) VALUES (?, ?);",
+                Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, item.getName());
-            ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            ps.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
             ps.execute();
+            try (var rslSet = ps.getGeneratedKeys()) {
+                if (rslSet.next()) {
+                    item.setId(rslSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +63,9 @@ public class SqlTracker implements Store, AutoCloseable {
     @Override
     public boolean replace(int id, Item item) {
         boolean rsl = false;
-        try (var ps = cn.prepareStatement("UPDATE items SET name = ? WHERE id = ? ;")) {
+        try (var ps = cn.prepareStatement(
+                "UPDATE items SET name = ? , created = current_timestamp WHERE id = ? ;"
+        )) {
             ps.setString(1, item.getName());
             ps.setInt(2, id);
             rsl = ps.executeUpdate() > 0;
@@ -95,10 +93,7 @@ public class SqlTracker implements Store, AutoCloseable {
         try (var ps = cn.prepareStatement("SELECT * FROM items;")) {
             try (var rslSet = ps.executeQuery()) {
                 while (rslSet.next()) {
-                    data.add(new Item(
-                            rslSet.getInt("id"),
-                            rslSet.getString("name")
-                    ));
+                    data.add(rslSetToItem(rslSet));
                 }
             }
         } catch (SQLException e) {
@@ -114,10 +109,7 @@ public class SqlTracker implements Store, AutoCloseable {
             ps.setString(1, key);
             try (var rslSet = ps.executeQuery()) {
                 while (rslSet.next()) {
-                    data.add(new Item(
-                            rslSet.getInt("id"),
-                            rslSet.getString("name")
-                    ));
+                    data.add(rslSetToItem(rslSet));
                 }
             }
         } catch (SQLException e) {
@@ -132,11 +124,8 @@ public class SqlTracker implements Store, AutoCloseable {
         try (var ps = cn.prepareStatement("SELECT * FROM items WHERE id = ? ;")) {
             ps.setInt(1, id);
             try (var rslSet = ps.executeQuery()) {
-                while (rslSet.next()) {
-                    rsl = new Item(
-                            rslSet.getInt("id"),
-                            rslSet.getString("name")
-                    );
+                if (rslSet.next()) {
+                    rsl = rslSetToItem(rslSet);
                 }
             }
         } catch (SQLException e) {
