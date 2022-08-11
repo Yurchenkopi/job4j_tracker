@@ -11,10 +11,10 @@ public class LambdaApp {
         BiFunction<Integer, Integer, Integer> func2 = action1(1);
         int a = func.apply(6, 5);
         int b = func2.apply(func.apply(6, 5), 5);
-        System.out.println(b);          // 11
+        System.out.println(b);
 
         int c = action(2).apply(8, 2);
-        System.out.println(c);          // 6
+        System.out.println(c);
     }
 
     private static BiFunction<Integer, Integer, Integer> action(int number) {
