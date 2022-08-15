@@ -71,10 +71,11 @@ public class SqlTracker implements Store, AutoCloseable {
     public boolean replace(int id, Item item) {
         boolean rsl = false;
         try (var ps = cn.prepareStatement(
-                "UPDATE items SET name = ? , created = current_timestamp WHERE id = ? ;"
+                "UPDATE items SET name = ? , created = ? WHERE id = ? ;"
         )) {
             ps.setString(1, item.getName());
-            ps.setInt(2, id);
+            ps.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
+            ps.setInt(3, id);
             rsl = ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
