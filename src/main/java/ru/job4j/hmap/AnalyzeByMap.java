@@ -1,8 +1,6 @@
 package ru.job4j.hmap;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AnalyzeByMap {
 
@@ -34,18 +32,75 @@ public class AnalyzeByMap {
     }
 
     public static List<Label> averageScoreBySubject(List<Pupil> pupils) {
-        return List.of();
+        Map<Subject, Integer> data = new LinkedHashMap<>();
+        List<Label> rsl = new ArrayList<>();
+        for (Pupil p : pupils) {
+            for (Subject s : p.subjects()) {
+                data.computeIfPresent(s, (k, v) -> v + s.score());
+                data.putIfAbsent(s, s.score());
+            }
+        }
+        for (Subject  s : data.keySet()) {
+            rsl.add(new Label(
+                    s.name(),
+                    (double) data.get(s) / pupils.size()
+                    ));
+        }
+        return rsl;
     }
 
     public static Label bestStudent(List<Pupil> pupils) {
-        return null;
+        List<Label> rsl = new LinkedList<>();
+        for (Pupil p : pupils) {
+            int sum = 0;
+            for (Subject s : p.subjects()) {
+                sum += s.score();
+            }
+            rsl.add(new Label(
+                    p.name(),
+                    sum
+            ));
+        }
+        rsl.sort(Comparator.naturalOrder());
+        return rsl.get(rsl.size() - 1);
     }
 
     public static Label bestSubject(List<Pupil> pupils) {
-        return null;
+        Map<Subject, Integer> data = new LinkedHashMap<>();
+        List<Label> rsl = new ArrayList<>();
+        for (Pupil p : pupils) {
+            for (Subject s : p.subjects()) {
+                data.computeIfPresent(s, (k, v) -> v + s.score());
+                data.putIfAbsent(s, s.score());
+            }
+        }
+        for (Subject  s : data.keySet()) {
+            rsl.add(new Label(
+                    s.name(),
+                    data.get(s)
+            ));
+        }
+        rsl.sort(Comparator.naturalOrder());
+        return rsl.get(rsl.size() - 1);
     }
 
     public record Subject(String name, int score) {
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Subject subject = (Subject) o;
+            return Objects.equals(name, subject.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
     public record Pupil(String name, List<Subject> subjects) {
