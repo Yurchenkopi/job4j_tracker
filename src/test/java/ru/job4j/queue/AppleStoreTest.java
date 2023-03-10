@@ -7,7 +7,7 @@ import java.util.Queue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AppleStoreTest {
+class AppleStoreTest  {
     @Test
     void whenGetLast() {
         Queue<Customer> customers = new LinkedList<>();
