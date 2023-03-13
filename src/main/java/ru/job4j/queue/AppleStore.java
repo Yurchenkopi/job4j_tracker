@@ -18,7 +18,7 @@ public class AppleStore  {
         for (int i = 0; i < count - 1; i++) {
             temp.poll();
         }
-        return temp.element().name();
+        return temp.poll().name();
     }
 
     public String getFirstUpsetCustomer() {
@@ -26,6 +26,6 @@ public class AppleStore  {
         for (int i = 0; i < count; i++) {
             temp.poll();
         }
-        return temp.element().name();
+        return temp.poll().name();
     }
 }
