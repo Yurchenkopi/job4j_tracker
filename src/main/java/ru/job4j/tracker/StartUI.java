@@ -37,9 +37,11 @@ public class StartUI {
             tracker.init();
             List<UserAction> actions = List.of(
                     new CreateAction(output),
+                    new CreateManyItems(output),
                     new ShowAllAction(output),
                     new EditAction(output),
                     new DeleteAction(output),
+                    new DeleteAllItems(output),
                     new FindItemByIdAction(output),
                     new FindItemByNameAction(output),
                     new ExitAction(output)
