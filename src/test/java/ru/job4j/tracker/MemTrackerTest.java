@@ -1,14 +1,12 @@
 package ru.job4j.tracker;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import static org.junit.Assert.assertNull;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.*;
 
 public class MemTrackerTest {
     @Test
@@ -17,7 +15,7 @@ public class MemTrackerTest {
         Item bug = new Item("Bug");
         Item item = tracker.add(bug);
         Item result = tracker.findById(item.getId());
-        assertThat(result.getName(), is(item.getName()));
+        assertThat(result.getName()).isEqualTo(item.getName());
     }
 
     @Test
@@ -28,7 +26,7 @@ public class MemTrackerTest {
         tracker.add(first);
         tracker.add(second);
         Item result = tracker.findAll().get(0);
-        assertThat(result.getName(), is(first.getName()));
+        assertThat(result.getName()).isEqualTo(first.getName());
     }
 
     @Test
@@ -42,7 +40,7 @@ public class MemTrackerTest {
         tracker.add(new Item("Second"));
         tracker.add(new Item("First"));
         List<Item> result = tracker.findByName(first.getName());
-        assertThat(result.size(), is(3));
+        assertThat(result.size()).isEqualTo(3);
     }
 
     @Test
@@ -56,7 +54,7 @@ public class MemTrackerTest {
         tracker.add(new Item("Second"));
         tracker.add(new Item("First"));
         List<Item> result = tracker.findByName(second.getName());
-        assertThat(result.get(1).getName(), is(second.getName()));
+        assertThat(result.get(1).getName()).isEqualTo(second.getName());
     }
 
     @Test
@@ -69,7 +67,7 @@ public class MemTrackerTest {
         Item bugWithDesc = new Item();
         bugWithDesc.setName("Bug with description");
         tracker.replace(id, bugWithDesc);
-        assertThat(tracker.findById(id).getName(), is("Bug with description"));
+        assertThat(tracker.findById(id).getName()).isEqualTo("Bug with description");
     }
 
     @Test
@@ -80,7 +78,7 @@ public class MemTrackerTest {
         tracker.add(bug);
         int id = bug.getId();
         tracker.delete(id);
-        assertNull(tracker.findById(id));
+        assertThat(tracker.findById(id)).isNull();
     }
 
     @Test
@@ -95,7 +93,7 @@ public class MemTrackerTest {
                 new ExitAction(out)
         );
         new StartUI(out).init(in, tracker, actions);
-        assertThat(tracker.findAll().get(0).getName(), is("Item name"));
+        assertThat(tracker.findAll().get(0).getName()).isEqualTo("Item name");
     }
 
     @Test
@@ -112,7 +110,7 @@ public class MemTrackerTest {
                 new ExitAction(out)
         );
         new StartUI(out).init(in, tracker, actions);
-        assertThat(tracker.findById(item.getId()).getName(), is(replacedName));
+        assertThat(tracker.findById(item.getId()).getName()).isEqualTo(replacedName);
     }
 
     @Test
@@ -128,7 +126,7 @@ public class MemTrackerTest {
                 new ExitAction(out)
         );
         new StartUI(out).init(in, tracker, actions);
-        assertNull(tracker.findById(item.getId()));
+        assertThat(tracker.findById(item.getId())).isNull();
     }
 
     @Test
@@ -141,11 +139,11 @@ public class MemTrackerTest {
         List<UserAction> actions = new ArrayList<>();
         actions.add(new ExitAction(out));
         new StartUI(out).init(in, tracker, actions);
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + System.lineSeparator()
                         + "0. Exit Program" + System.lineSeparator()
                         + "=== Exit Program ===" + System.lineSeparator()
-        ));
+        );
     }
 
     @Test
@@ -163,7 +161,7 @@ public class MemTrackerTest {
         );
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Edit item" + ln
                         + "1. Exit Program" + ln
@@ -173,7 +171,7 @@ public class MemTrackerTest {
                         + "0. Edit item" + ln
                         + "1. Exit Program" + ln
                         + "=== Exit Program ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -191,7 +189,7 @@ public class MemTrackerTest {
         );
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Show all items" + ln
                         + "1. Exit Program" + ln
@@ -202,7 +200,7 @@ public class MemTrackerTest {
                         + "0. Show all items" + ln
                         + "1. Exit Program" + ln
                         + "=== Exit Program ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -220,7 +218,7 @@ public class MemTrackerTest {
         );
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Find item by name" + ln
                         + "1. Exit Program" + ln
@@ -230,7 +228,7 @@ public class MemTrackerTest {
                         + "0. Find item by name" + ln
                         + "1. Exit Program" + ln
                         + "=== Exit Program ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -249,7 +247,7 @@ public class MemTrackerTest {
         );
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Find item by id" + ln
                         + "1. Exit Program" + ln
@@ -259,7 +257,7 @@ public class MemTrackerTest {
                         + "0. Find item by id" + ln
                         + "1. Exit Program" + ln
                         + "=== Exit Program ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -275,7 +273,7 @@ public class MemTrackerTest {
         );
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Show all items" + ln
                         + "1. Exit Program" + ln
@@ -285,7 +283,7 @@ public class MemTrackerTest {
                         + "0. Show all items" + ln
                         + "1. Exit Program" + ln
                         + "=== Exit Program ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -301,7 +299,7 @@ public class MemTrackerTest {
         );
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Find item by name" + ln
                         + "1. Exit Program" + ln
@@ -311,7 +309,7 @@ public class MemTrackerTest {
                         + "0. Find item by name" + ln
                         + "1. Exit Program" + ln
                         + "=== Exit Program ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -327,7 +325,7 @@ public class MemTrackerTest {
         );
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Find item by id" + ln
                         + "1. Exit Program" + ln
@@ -337,7 +335,7 @@ public class MemTrackerTest {
                         + "0. Find item by id" + ln
                         + "1. Exit Program" + ln
                         + "=== Exit Program ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -351,15 +349,14 @@ public class MemTrackerTest {
         actions.add(new ExitAction(out));
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                         "Menu:" + ln
                                 + "0. Exit Program" + ln
                                 + "Wrong input, you can select: 0 .. 0" + ln
                                 + "Menu:" + ln
                                 + "0. Exit Program" + ln
                                 + "=== Exit Program ===" + ln
-                )
-        );
+                );
     }
 
     @Test
@@ -374,7 +371,7 @@ public class MemTrackerTest {
                                             new Item(3, "test3"),
                                             new Item(4, "test4"));
         Collections.sort(items, new ItemAscByName());
-        assertThat(items, is(expected));
+        assertThat(items).isEqualTo(expected);
     }
 
     @Test
@@ -389,7 +386,7 @@ public class MemTrackerTest {
                 new Item(2, "test2"),
                 new Item(1, "test1"));
         Collections.sort(items, new ItemDescByName());
-        assertThat(items, is(expected));
+        assertThat(items).isEqualTo(expected);
     }
 }
 
