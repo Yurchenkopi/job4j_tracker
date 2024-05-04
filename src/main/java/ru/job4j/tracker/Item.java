@@ -2,14 +2,19 @@ package ru.job4j.tracker;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Entity
+@Table(name = "items")
 @Data
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "name"})
 public class Item {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
