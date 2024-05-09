@@ -15,7 +15,7 @@ public class MemTracker implements Store {
     }
 
     @Override
-    public Item findById(int id) {
+    public Item findById(Integer id) {
         int index = indexOf(id);
         return index != -1 ? items.get(index) : null;
     }
@@ -48,7 +48,7 @@ public class MemTracker implements Store {
     }
 
     @Override
-    public boolean replace(int id, Item item) {
+    public boolean replace(Integer id, Item item) {
         int index = indexOf(id);
         if (index != -1) {
             item.setId(id);
@@ -58,7 +58,7 @@ public class MemTracker implements Store {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         int index = indexOf(id);
         if (index != -1) {
             items.remove(index);

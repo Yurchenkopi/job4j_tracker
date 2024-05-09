@@ -68,7 +68,7 @@ public class SqlTracker implements Store, AutoCloseable {
     }
 
     @Override
-    public boolean replace(int id, Item item) {
+    public boolean replace(Integer id, Item item) {
         boolean rsl = false;
         try (var ps = cn.prepareStatement(
                 "UPDATE items SET name = ? , created = ? WHERE id = ? ;"
@@ -84,7 +84,7 @@ public class SqlTracker implements Store, AutoCloseable {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         boolean rsl = false;
         try (var ps = cn.prepareStatement("DELETE FROM items WHERE id = ? ;")) {
             ps.setInt(1, id);
@@ -127,7 +127,7 @@ public class SqlTracker implements Store, AutoCloseable {
     }
 
     @Override
-    public Item findById(int id) {
+    public Item findById(Integer id) {
         Item rsl = null;
         try (var ps = cn.prepareStatement("SELECT * FROM items WHERE id = ? ;")) {
             ps.setInt(1, id);
