@@ -108,9 +108,8 @@ public class HbmTracker implements Store, AutoCloseable {
         try {
             session.beginTransaction();
             Query<Item> query = session.createQuery(
-                    "FROM Item i WHERE i.name LIKE :fKey", Item.class);
-            String modifyKey = String.format("%s%s%s", "%", key, "%");
-            query.setParameter("fKey", modifyKey);
+                    "FROM Item i WHERE i.name = :fKey", Item.class);
+            query.setParameter("fKey", key);
             session.getTransaction().commit();
             rsl = query.list();
         } catch (Exception e) {
