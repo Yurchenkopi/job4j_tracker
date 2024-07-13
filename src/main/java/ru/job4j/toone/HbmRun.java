@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.List;
+import java.util.TimeZone;
 
 public class HbmRun {
     public static void main(String[] args) {
@@ -15,14 +16,21 @@ public class HbmRun {
         try {
             SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
             var role = new Role();
-            role.setName("ADMIN");
+            role.setName("User");
             create(role, sf);
             var user = new User();
-            user.setName("Admin Admin");
+            user.setName("User User");
+            user.setMessengers(List.of(
+                    new UserMessenger(0, "tg", "@tg"),
+                    new UserMessenger(0, "wu", "@wu")
+            ));
             user.setRole(role);
             create(user, sf);
-            findAll(User.class, sf)
-                    .forEach(System.out::println);
+            var stored = sf.openSession()
+                    .createQuery("from User where id = :fId", User.class)
+                    .setParameter("fId", user.getId())
+                    .getSingleResult();
+            stored.getMessengers().forEach(System.out::println);
         }  catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -31,7 +39,10 @@ public class HbmRun {
     }
 
     public static <T> void create(T model, SessionFactory sf) {
-        Session session = sf.openSession();
+        Session session = sf
+                .withOptions()
+                .jdbcTimeZone(TimeZone.getTimeZone("UTC"))
+                .openSession();
         session.beginTransaction();
         session.persist(model);
         session.getTransaction().commit();
